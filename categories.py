@@ -1,10 +1,9 @@
-from telnetlib import STATUS
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
 import csv 
-from sys import exec_prefix, platform
+from sys import platform
 from selenium.webdriver.support.ui import Select
 
 
