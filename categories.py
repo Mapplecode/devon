@@ -10,30 +10,41 @@ from selenium.webdriver.support.ui import Select
 def product_details(driver,url):
     try:
         detailList = list()
-        driver.get(url)
+        print(url)
+        driver.get(str(url['URL']))
         time.sleep(2)
-        product_name = driver.find_element(By.CLASS_NAME,'p-name').text
-        price = driver.find_element(By.CLASS_NAME,'p-price').text
-        select  = driver.find_element(By.CLASS_NAME,'optionSelect').text
-        all_sizes = driver.find_element(By.CLASS_NAME,'optionSelect').text
-        sizes = all_sizes.split('\n')
-        sizes.pop(0)
-
+        product_name = driver.find_element(By.CLASS_NAME, 'p-name').text
+        price = driver.find_element(By.CLASS_NAME, 'p-price').text
+        option_container = driver.find_element(By.CLASS_NAME, 'productOptionsTableContainer')
+        loc = option_container.location_once_scrolled_into_view
+        product_select = option_container.find_element(By.XPATH, '//select[@name="option[Size]"]')
+        select = Select(option_container.find_element(By.XPATH, '//select[@name="option[Size]"]'))
+        # print(product_select)
+        options = product_select.find_elements(By.TAG_NAME, 'option')
         # count = 0
-        for size in sizes[:-1]:
-            sel = Select(driver.find_element(By.XPATH,'/html/body/div[1]/div[1]/div/div/section/article/div/div[2]/div/div[2]/div/div[1]/form/div/table/tbody/tr[1]/td[2]/select'))
+        for option in options:
             time.sleep(2)
-            sel.select_by_visible_text(size)
+            value = option.get_attribute('value')
+            select.select_by_value(value)
+            size = value
+            try:
+                size = str(size).split('|')[0]
+            except:
+                pass
             # sel.select_by_index(count)
             status = ''
-            status = driver.find_element(By.ID, 'stocklevel5310380').text
+            status = driver.find_element(By.CLASS_NAME, 'stock_level_message').text
+            price = driver.find_element(By.CLASS_NAME, 'wdk_basket_qtytxt').find_element(By.TAG_NAME, 'span').text
+
             if not status:
                 status = "Available"
-            print("\n INFO ",[product_name,price,size,status])
-            detailList.append([product_name,price,size,status])
+            # print("\n INFO ",[product_name,price,size,status])
+            if 'Choose' not in size:
+                detailList.append([product_name, price, size, status])
             # count += 1
         return detailList
     except Exception as e:
+        print(e)
         return list()
 
 def getAllproductLink(driver,url):
@@ -53,26 +64,35 @@ def getAllproductLink(driver,url):
         for source in source_list:
             driver.get(source)
             time.sleep(1)
-            pro_list = driver.find_elements(By.XPATH,'//a[@rel="product"]')
-            for product in pro_list:
-                print(product.text)
-                p_source = product.get_attribute('href')
-                print(p_source)
-                product_list.append(p_source)
+            next_found = True
+            while next_found:
+                time.sleep(1)
+                pro_list = driver.find_elements(By.XPATH, '//a[@rel="product"]')
+                for product in pro_list:
+                    print(product.text)
+                    p_source = product.get_attribute('href')
+                    print(p_source)
+                    product_list.append({"Name": product.text, 'URL': p_source})
+                try:
+                    nextbtn = driver.find_element(By.CLASS_NAME, 'pagination-next')
+                    nextbtn.click()
+                except Exception as e:
+                    # print(e)
+                    next_found = False
         # print(product_list)
         return product_list
     except Exception as e:
         return list()
 
 def write_csv(rows,filename):
-    fields = ['Product Name', 'Price', 'Size', 'Status'] 
+    # fields = ['Product Name', 'Price', 'Size', 'Status']
     rows = rows
 
-    with open(filename, 'w') as csvfile: 
-        csvwriter = csv.writer(csvfile) 
-        csvwriter.writerow(fields) 
+    with open(filename, 'a') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        # csvwriter.writerow(fields)
         csvwriter.writerows(rows)
-    print("[INFO] File write successfully.")
+    print("[INFO] File write successfull.")
 
 def main():
     if platform == "linux" or platform == "linux2":
@@ -89,6 +109,7 @@ def main():
         options.add_argument('--disable-gpu')
         s = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=s, options=options)  
+        driver.maximize_window()
 
     try:
         filename = "product_details.csv"
@@ -97,18 +118,18 @@ def main():
         url = 'https://www.backontrack-uk.co.uk/'
 
         ## For all the urls
-        # productList = getAllproductLink(driver,url)
-        # for product_url in productList:
-        #     productUrl = "https://www.backontrack-uk.co.uk/ourshop/prod_5310380-Back-on-Track-Canine-Fleece-RugSupreme.html"
-        #     detailList = product_details(driver,productUrl)
-        #     write_csv(detailList,filename)
+        productList = getAllproductLink(driver,url)
+        for product_url in productList:
+            detailList = product_details(driver,product_url)
+            print(detailList,'  ---   ---- --- ')
+            write_csv(detailList,filename)
 
 
         ## for single url
-        productUrl = "https://www.backontrack-uk.co.uk/ourshop/prod_5310380-Back-on-Track-Canine-Fleece-RugSupreme.html"
-        detailList = product_details(driver,productUrl)
-        filename = "product_details.csv"
-        write_csv(detailList,filename)
+        # productUrl = "https://www.backontrack-uk.co.uk/ourshop/prod_5310380-Back-on-Track-Canine-Fleece-RugSupreme.html"
+        # detailList = product_details(driver,productUrl)
+        # filename = "product_details.csv"
+        # write_csv(detailList,filename)
 
     except Exception as e:
         print(e)    
