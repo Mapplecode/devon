@@ -28,7 +28,7 @@ def product_details(driver,url):
             except:
                 pass
             select.select_by_value(value)
-            # sel.select_by_index(count)
+            # sel.sdelect_by_index(count)
             status = ''
             status = driver.find_element(By.CLASS_NAME, 'stock_level_message').text
             price = driver.find_element(By.CLASS_NAME,'wdk_basket_qtytxt').find_element(By.TAG_NAME,'span').text
