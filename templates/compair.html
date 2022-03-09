@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="seo & digital marketing">
+    <meta name="keywords" content="marketing,digital marketing,creative, agency, startup,promodise,onepage, clean, modern,seo,business, company">
+    <meta name="author" content="Themefisher.com">
+
+   <title>Promodise - seo and digital marketing solution </title>
+    <!-- bootstrap.min css -->
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.css">
+    <!-- Icofont Css -->
+    <link rel="stylesheet" href="/static/plugins/fontawesome/css/all.css">
+    <!-- animate.css -->
+    <link rel="stylesheet" href="/static/plugins/animate-css/animate.css">
+    <!-- Icofont -->
+    <link rel="stylesheet" href="/static/plugins/icofont/icofont.css">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+</head>
+
+
+<body data-spy="scroll" data-target=".fixed-top">
+
+
+
+<nav class="navbar navbar-expand-lg fixed-top trans-navigation">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="/static/images/logo.png" alt="" class="img-fluid b-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">
+                    <i class="fa fa-bars"></i>
+                </span>
+              </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+                <ul class="navbar-nav ">
+                    <li class="nav-item">
+                        <a class="nav-link smoth-scroll" href="/">Home</a>
+                    </li>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--MAIN HEADER AREA END -->
+
+<!--MAIN BANNER AREA START -->
+<div class="banner-area banner-3">
+    <div class="overlay dark-overlay"></div>
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 m-auto text-center col-sm-12 col-md-12">
+                        <div class="banner-content content-padding">
+                            <h2 class="subtitle">select CSV to compair</h2>
+              <div class="row">
+
+               <div class="col-lg-4 col-sm-6 col-md-6 p-4">
+                    <div class="service-box">
+                        <select id="file_select1"  class="form-select" aria-label="Default select example" style="width: -moz-available;">
+                          <option selected>Select csv</option>
+                            {% for files in scrap_folder_files %}
+                            <option value="{{files}}">{{files}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                </div>
+
+
+               <div class="col-lg-4 col-sm-6 col-md-6 p-4">
+                    <div class="service-box">
+                        <select id="file_select2" class="form-select" aria-label="Default select example" style="width: -moz-available;">
+                            <option selected>Select csv</option>
+                            {% for files in scrap_folder_files %}
+                            <option value="{{files}}">{{files}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                </div>
+                   <div class="col-lg-4 col-sm-6 col-md-6">
+
+                        <button id='files_submit' class="btn btn-warning btn-sm"
+                                style="text-align: center; position: absolute;margin-top: 25%;">Submit</button>
+
+                </div>
+
+            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--  FOOTER AREA START  -->
+<section id="footer" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-sm-8 col-md-8">
+                <div class="footer-widget footer-link">
+                    <h4>We concern about you<br> to grow business rapidly.</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore ipsam hic non sunt recusandae atque unde saepe nihil earum voluptatibus aliquid optio suscipit nobis quia excepturi vel quod, iure quae.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-4 col-md-4">
+                <div class="footer-widget footer-link">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Service</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Testimonials</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-sm-6 col-md-6">
+                <div class="footer-widget footer-link">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">How it Works</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Report Bug</a></li>
+                        <li><a href="#">License</a></li>
+                        <li><a href="#">Terms & Condition</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-6">
+                <div class="footer-widget footer-text">
+                    <h4>Our location</h4>
+                    <p class="mail"><span>Mail:</span> promdise@gmail.com</p>
+                    <p><span>Phone :</span>+202-277-3894</p>
+                    <p><span>Location:</span> 455 West Orchard Street Kings Mountain, NC 28086,NOC building</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer-copy">
+                    © 2018 Promodise inc. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--  FOOTER AREA END  -->
+
+
+
+    <!--
+    Essential Scripts
+    =====================================-->
+
+
+    <!-- Main jQuery -->
+    <script src="/static/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4.3.1 -->
+    <script src="/static/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+   <!-- Woow animtaion -->
+    <script src="/static/plugins/counterup/wow.min.js"></script>
+    <script src="/static/plugins/counterup/jquery.easing.1.3.js"></script>
+     <!-- Counterup -->
+    <script src="/static/plugins/counterup/jquery.waypoints.js"></script>
+    <script src="/static/plugins/counterup/jquery.counterup.min.js"></script>
+
+    <!-- Google Map -->
+    <script src="/static/plugins/google-map/gmap3.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>
+    <!-- Contact Form -->
+    <script src="/static/plugins/jquery/contact.js"></script>
+    <script src="/static/js/custom.js"></script>
+    <script src="/static/js/compair.js"></script>
+  </body>
+  </html>

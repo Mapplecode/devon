@@ -102,7 +102,7 @@ def write_csv(rows,filename):
         csvwriter.writerows(rows)
     print("[INFO] File write successfull.")
 
-def main():
+def start_scrap():
     if platform == "linux" or platform == "linux2":
         # linux
         driver = webdriver.Chrome(executable_path='/home/mapple/PycharmProjects/devon/chromedriver')
@@ -127,7 +127,7 @@ def main():
 
         ## For all the urls
         productList = getAllproductLink(driver,url)
-        filename = str(datetime.now())+'_.csv'
+        filename = '/scraps/'+str(datetime.now())+'_.csv'
         for product_url in productList:
             detailList = product_details(driver,product_url)
             print(detailList,'  ---   ---- --- ')
@@ -143,6 +143,6 @@ def main():
         print(e)    
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
