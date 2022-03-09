@@ -5,7 +5,7 @@ import time
 import csv 
 from sys import platform
 from selenium.webdriver.support.ui import Select
-
+from datetime import datetime
 
 def product_details(driver,url):
     try:
@@ -14,7 +14,9 @@ def product_details(driver,url):
         driver.get(str(url['URL']))
         time.sleep(2)
         product_name = driver.find_element(By.CLASS_NAME, 'p-name').text
+        prod_id = driver.find_element(By.NAME,'prodid').get_attribute('value')
         price = driver.find_element(By.CLASS_NAME, 'p-price').text
+
         try:
             option_container = driver.find_element(By.CLASS_NAME, 'productOptionsTableContainer')
             loc = option_container.location_once_scrolled_into_view
@@ -41,7 +43,7 @@ def product_details(driver,url):
                     status = "Available"
                 # print("\n INFO ",[product_name,price,size,status])
                 if 'Choose' not in size:
-                    detailList.append([product_name, price, size, status])
+                    detailList.append([prod_id,product_name, price, size, status])
                 # count += 1
         except:
             status = driver.find_element(By.CLASS_NAME, 'stock_level_message').text
@@ -94,7 +96,6 @@ def getAllproductLink(driver,url):
 def write_csv(rows,filename):
     # fields = ['Product Name', 'Price', 'Size', 'Status']
     rows = rows
-
     with open(filename, 'a') as csvfile:
         csvwriter = csv.writer(csvfile)
         # csvwriter.writerow(fields)
@@ -126,11 +127,11 @@ def main():
 
         ## For all the urls
         productList = getAllproductLink(driver,url)
+        filename = str(datetime.now())+'_.csv'
         for product_url in productList:
             detailList = product_details(driver,product_url)
             print(detailList,'  ---   ---- --- ')
             write_csv(detailList,filename)
-
 
         ## for single url
         # productUrl = "https://www.backontrack-uk.co.uk/ourshop/prod_5310380-Back-on-Track-Canine-Fleece-RugSupreme.html"
