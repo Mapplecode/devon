@@ -7,6 +7,9 @@ from sys import platform
 from selenium.webdriver.support.ui import Select
 from datetime import datetime
 
+
+
+
 def product_details(driver,url):
     try:
         detailList = list()
@@ -14,7 +17,12 @@ def product_details(driver,url):
         driver.get(str(url['URL']))
         time.sleep(2)
         product_name = driver.find_element(By.CLASS_NAME, 'p-name').text
-        prod_id = driver.find_element(By.NAME,'prodid').get_attribute('value')
+        prod_id = ''
+
+        try:
+            prod_id = driver.find_element(By.NAME,'prodid').get_attribute('value')
+        except:
+            pass
         price = driver.find_element(By.CLASS_NAME, 'p-price').text
 
         try:
@@ -50,7 +58,7 @@ def product_details(driver,url):
             price = driver.find_element(By.CLASS_NAME,'wdk_basket_qtytxt').text
             if not status:
                 status = "Available"
-            detailList.append([product_name, price.split(" ")[2], '', status])
+            detailList.append(['',product_name, price.split(" ")[2], '', status])
         return detailList
     except Exception as e:
         print(e)

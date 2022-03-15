@@ -1,13 +1,15 @@
 from csv_diff import load_csv, compare
-
+import os
+import pprint
+path = os.path.join(os.getcwd(),'scraps')
 diff = compare(
-    load_csv(open("2022-03-07 13_10_25.311873_.csv"), key="id"),
-    load_csv(open("2022-03-14 13_36_10.284265_.csv"), key="id")
+    load_csv(open(path+'/'+"2022-03-07 13:10:25.311873_.csv"), key="id"),
+    load_csv(open(path+'/'+"2022-03-14 13:36:10.284265_.csv"), key="id")
 )
-print(diff)
+pprint.pprint(diff)
 
-fileone = "2022-03-07 13_10_25.311873_.csv"
-filetwo = "2022-03-14 13_36_10.284265_.csv"
+fileone = path+'/'+"2022-03-07 13:10:25.311873_.csv"
+filetwo = path+'/'+"2022-03-14 13:36:10.284265_.csv"
 
 # with open(fileone, 'r') as file1:
 #     with open(filetwo, 'r') as file2:
@@ -26,6 +28,6 @@ with open(fileone, 'r') as file1:
 
 difference.discard('\n')
 
-with open('diff.txt', 'w') as file_out:
+with open(path+'/'+'diff.txt', 'w') as file_out:
     for line in difference:
         file_out.write(line)
