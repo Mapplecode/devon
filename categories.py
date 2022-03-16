@@ -44,8 +44,14 @@ def product_details(driver,url):
                     pass
                 # sel.select_by_index(count)
                 status = ''
-                status = driver.find_element(By.CLASS_NAME, 'stock_level_message').text
-                price = driver.find_element(By.CLASS_NAME, 'wdk_basket_qtytxt').find_element(By.TAG_NAME, 'span').text
+                try:
+                    status = driver.find_element(By.CLASS_NAME, 'stock_level_message').text
+                except:
+                    status = 'None'
+                try:
+                    price = driver.find_element(By.CLASS_NAME, 'wdk_basket_qtytxt').find_element(By.TAG_NAME, 'span').text
+                except:
+                    price = 'None'
 
                 if not status:
                     status = "Available"
@@ -58,7 +64,7 @@ def product_details(driver,url):
             price = driver.find_element(By.CLASS_NAME,'wdk_basket_qtytxt').text
             if not status:
                 status = "Available"
-            detailList.append(['',product_name, price.split(" ")[2], '', status])
+            detailList.append(['None',product_name, price.split(" ")[2], 'None', status])
         return detailList
     except Exception as e:
         print(e)

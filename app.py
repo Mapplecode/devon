@@ -3,7 +3,7 @@ from flask import render_template,request,jsonify,json
 from categories import start_scrap
 import pandas as pd
 import os
-
+from filecompair import file_compair
 
 app = Flask(__name__)
 
@@ -23,22 +23,17 @@ def compair():
 def compair_files():
     param = {}
     data = {}
-
-
-
     try:
         if request.method == 'GET':
             param = request.args
         elif request.method == 'POST':
             param = request.form
-        print(param)
         path = os.path.join(os.getcwd(),'scraps')
         file1 = os.path.join(path,param.get('file1') )
         file2 = os.path.join(path, param.get('file2') )
-        A = (pd.read_csv(file1) )
-        B = (pd.read_csv(file2) )
-        print(A , B)
-        return jsonify(param)
+        data = file_compair(file1,file2)
+        print(data)
+        return jsonify({'data':data})
     except Exception as e :
         print(e)
         return jsonify({'message':str(e)})
