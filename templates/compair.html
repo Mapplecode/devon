@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="zxx" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <!-- Required meta tags -->
@@ -21,8 +21,6 @@
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="/static/css/style.css">
-
-
 </head>
 
 
@@ -105,7 +103,7 @@
 
             </div>
             <div>
-                <table class="table table-light mt-3">
+                <table class="table table-light mt-3 " id="compair_table" style="display:block;max-height:300px;overflow:scroll;">
                       <thead>
                         <tr>
                           <th scope="col">Product Id</th>
@@ -115,10 +113,14 @@
                         </tr>
                       </thead>
                     <tbody id="table_data">
-
-
                     </tbody>
                 </table>
+                <div class="pagination">
+                    <div class="col-sm-1">
+                    <a href="#" class="previous" data-action="previous"><p>Previous</p></a></div>
+                    <div class="col-sm-9"></div>
+                    <div class="col-sm-1"><a href="#" class="next" data-action="next"><p>Next</p></a></div>
+                </div>
             </div>
 
                         </div>
@@ -213,6 +215,7 @@
     <!-- Contact Form -->
     <script src="/static/plugins/jquery/contact.js"></script>
     <script src="/static/js/custom.js"></script>
+
     <script src="/static/js/compair.js"></script>
   </body>
   </html>

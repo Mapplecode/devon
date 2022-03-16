@@ -46,7 +46,7 @@ def file_compair(file_1,file_2):
                 size = str(ind['size'])
                 price = str(ind['price'])
                 new_tr = ''
-                new_tr =  "<tr class='"+str(action)+"'>"+"<tr scope='row'>"+str(id)+"</tr>" + "<td>"+str(name)+"</td>" + "<td>"+str(price)+"</td>"+ "<td>"+str(size)+"</td>"+"</tr>"
+                new_tr =  "<tr style='display:block;' class='"+str(action)+"'>"+"<tr >"+str(id)+"</tr>" + "<td>"+str(name)+"</td>" + "<td>"+str(price)+"</td>"+ "<td>"+str(size)+"</td>"+"</tr>"
                 tr_string = tr_string + new_tr
             except Exception as e:
                 print(e)
