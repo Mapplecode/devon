@@ -142,6 +142,7 @@ def start_scrap():
         ## For all the urls
         productList = getAllproductLink(driver,url)
         filename = 'scraps/'+str(datetime.now())+'_.csv'
+        write_csv(['id','name','price','size','availablity'],filename=filename)
         for product_url in productList:
             detailList = product_details(driver,product_url)
             print(detailList,'  ---   ---- --- ')
