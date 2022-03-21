@@ -6,9 +6,11 @@ import csv
 from sys import platform
 from selenium.webdriver.support.ui import Select
 from datetime import datetime
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
-
-
+count_file = 'count_file.txt'
 
 def product_details(driver,url):
     try:
@@ -117,22 +119,17 @@ def write_csv(rows,filename):
     print("[INFO] File write successfull.")
 
 def start_scrap():
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
     if platform == "linux" or platform == "linux2":
         # linux
-        driver = webdriver.Chrome(executable_path='/home/mapple/PycharmProjects/devon/chromedriver')
-
+        driver = webdriver.Chrome(executable_path='/home/mapple/PycharmProjects/devon/chromedriver',options=options)
     elif platform == "win32":
-        # Windows...    
-        from selenium.webdriver.chrome.options import Options
-        from selenium.webdriver.chrome.service import Service
-        from webdriver_manager.chrome import ChromeDriverManager
-        options = Options()
-        # options.add_argument('--headless')
-        options.add_argument('--disable-gpu')
+        # Windows...
         s = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=s, options=options)  
         driver.maximize_window()
-
     try:
         filename = "product_details.csv"
 
@@ -143,11 +140,20 @@ def start_scrap():
         productList = getAllproductLink(driver,url)
         filename = 'scraps/'+str(datetime.now())+'_.csv'
         write_csv(['id','name','price','size','availablity'],filename=filename)
+        read_file = open(count_file, 'w')
+        read_file.write(str(len(productList)))
+        read_file.close()
+        count = 0
         for product_url in productList:
+            count = count + 1
             detailList = product_details(driver,product_url)
             print(detailList,'  ---   ---- --- ')
             write_csv(detailList,filename)
-
+            read_file = open(count_file, 'w')
+            read_file.write(str(len(productList)-count))
+            read_file.close()
+        import os
+        os.remove("count_file.txt")
         ## for single url
         # productUrl = "https://www.backontrack-uk.co.uk/ourshop/prod_5310380-Back-on-Track-Canine-Fleece-RugSupreme.html"
         # detailList = product_details(driver,productUrl)

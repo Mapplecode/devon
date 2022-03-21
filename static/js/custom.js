@@ -1,5 +1,5 @@
     new WOW().init();
-
+var READ_SCRAP = false;
 (function ($) {
 
    'use strict';
@@ -91,3 +91,35 @@
 
 
 })(window.jQuery);
+
+function start_scraping(){
+$('#play-pause-icon').removeClass("fa-play");
+$('#play-pause-icon').addClass("fa-pause");
+$('#scrap_start_div').attr('onclick','')
+$('#scrap_info_text').text('Scrap started.\nPlease wait and do not close the window\nYou can minimize the window')
+
+$.ajax({
+     url: "/start_scrap",
+     success: function(result){
+//        $("#div1").html(result);
+        console.log('started')
+
+  }});
+
+}
+
+var intervalId = window.setInterval(function(){
+  $.ajax({
+     url: "/remaining_products",
+     success: function(result){
+//        $("#div1").html(result);
+        console.log(result)
+        if (result.data != ''){
+        $('#count_text').text( result.data)
+        if (result.data <= 0){
+        window.close();
+        }
+        }
+        else{$('#count_text').text( 'Counting total products to scrap...')}
+  }});
+}, 5000);

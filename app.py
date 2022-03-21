@@ -4,7 +4,7 @@ from categories import start_scrap
 import pandas as pd
 import os
 from filecompair import file_compair
-
+import os
 app = Flask(__name__)
 
 @app.route("/")
@@ -40,13 +40,27 @@ def compair_files():
 
 
 @app.route('/start_scrap')
-def start_scrap():
+def start_scrap1():
     start_scrap()
 
+@app.route("/scraping")
+def scraping():
+    try:
+        os.remove("count_file.txt")
+    except:
+        pass
+    return render_template('scraping.html')
+
+@app.route("/remaining_products")
+def remaining_products():
+    if os.path.exists('count_file.txt'):
+        read_file = 'count_file.txt'
+        str1 = open(read_file,'r').read()
+        return {'data': 'Remaining products - '+str(str1)}
+    else:
+        return {'data':''}
 
 
+# if __name__ == "__main__":
+#    app.run(debug=True, use_debugger=False, use_reloader=False)
 
-
-
-if __name__ == "__main__":
-   app.run(debug=True, use_debugger=False, use_reloader=False)
