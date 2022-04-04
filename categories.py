@@ -19,12 +19,6 @@ def product_details(driver,url):
         driver.get(str(url['URL']))
         time.sleep(2)
         product_name = driver.find_element(By.CLASS_NAME, 'p-name').text
-        prod_id = ''
-
-        try:
-            prod_id = driver.find_element(By.NAME,'prodid').get_attribute('value')
-        except:
-            pass
         price = driver.find_element(By.CLASS_NAME, 'p-price').text
 
         try:
@@ -40,6 +34,8 @@ def product_details(driver,url):
                 value = option.get_attribute('value')
                 select.select_by_value(value)
                 size = value
+                prod_id = option.get_attribute('id')
+                print(prod_id)
                 try:
                     size = str(size).split('|')[0]
                 except:

@@ -107,19 +107,3 @@ $.ajax({
   }});
 
 }
-
-var intervalId = window.setInterval(function(){
-  $.ajax({
-     url: "/remaining_products",
-     success: function(result){
-//        $("#div1").html(result);
-        console.log(result)
-        if (result.data != ''){
-        $('#count_text').text( result.data)
-        if (result.data <= 0){
-        window.close();
-        }
-        }
-        else{$('#count_text').text( 'Counting total products to scrap...')}
-  }});
-}, 5000);
