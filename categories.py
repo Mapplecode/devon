@@ -35,7 +35,6 @@ def product_details(driver,url):
                 select.select_by_value(value)
                 size = value
                 prod_id = option.get_attribute('id')
-                print(prod_id)
                 try:
                     size = str(size).split('|')[0]
                 except:
@@ -59,10 +58,11 @@ def product_details(driver,url):
                 # count += 1
         except:
             status = driver.find_element(By.CLASS_NAME, 'stock_level_message').text
-            price = driver.find_element(By.CLASS_NAME,'wdk_basket_qtytxt').text
+            price = driver.find_element(By.NAME,'unit_price').text
+            prodid = driver.find_element(By.NAME,'prodid').text
             if not status:
                 status = "Available"
-            detailList.append(['None',product_name, price.split(" ")[2], 'None', status])
+            detailList.append([prodid,product_name, price.split(" ")[2], 'None', status])
         return detailList
     except Exception as e:
         print(e)
@@ -116,7 +116,7 @@ def write_csv(rows,filename):
 
 def start_scrap():
     options = Options()
-    options.add_argument('--headless')
+    # options.add_argument('--headless')
     options.add_argument('--disable-gpu')
     if platform == "linux" or platform == "linux2":
         # linux
@@ -127,15 +127,13 @@ def start_scrap():
         driver = webdriver.Chrome(service=s, options=options)  
         driver.maximize_window()
     try:
-        filename = "product_details.csv"
-
         ## call function        
         url = 'https://www.backontrack-uk.co.uk/'
 
         ## For all the urls
         productList = getAllproductLink(driver,url)
         filename = 'scraps/'+str(datetime.now())+'_.csv'
-        write_csv(['id','name','price','size','availablity'],filename=filename)
+        write_csv([['id','name','price','size','availablity']],filename=filename)
         read_file = open(count_file, 'w')
         read_file.write(str(len(productList)))
         read_file.close()

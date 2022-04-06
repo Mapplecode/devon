@@ -33,7 +33,7 @@ def compair_files():
         file2 = os.path.join(path, param.get('file2') )
         data = file_compair(file1,file2)
         return jsonify({'data':data})
-    except Exception as e :
+    except Exception as e:
         print(e)
         return jsonify({'message':str(e)})
 
