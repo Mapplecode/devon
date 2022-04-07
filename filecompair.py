@@ -9,6 +9,7 @@ def file_compair(file_1,file_2):
         os.remove(COMPAIR_FILE_NAME)
     except:
         pass
+    print(file_1,file_2)
     CSV_1 = load_csv(open(file_1), key="id")
     CSV_2 = load_csv(open(file_2), key="id")
     diff = compare(CSV_1,CSV_2)
@@ -16,41 +17,32 @@ def file_compair(file_1,file_2):
     for action in diff.keys():
         inner_data = diff[action]
         for ind in inner_data:
-            for id in CSV_1:
-                try:
-                    print(id)
-                    if str(CSV_1[id]) != 'None' and str(CSV_2[id]) != 'None' and str(id) != 'None':
-                        if CSV_1[id]['name'] != CSV_2[id]['name'] or CSV_1[id]['price'] != CSV_2[id]['price'] or \
-                                CSV_1[id]['size'] != CSV_2[id]['size'] or CSV_1[id]['availablity'] != CSV_2[id][
-                            'availablity']:
-
-                            print('SAME')
-                        else:
-                            print(id)
-                            print(CSV_1[id]['price'], '---', CSV_2[id]['price'])
-
-                except:
-                    print('NEW DATA')
             try:
-                id = str(ind['id'])
-                name = str(ind['name'])
-                size = str(ind['size'])
-                price = str(ind['price'])
+                if inner_data != 'changed':
+                    id = str(ind['id'])
+                    name = str(ind['name'])
+                    size = str(ind['size'])
+                    price = str(ind['price'])
+                    availablity = str(ind['availablity'])
+                else:
+                    id = str(ind['key'])
+                    name = ''
+                    size =  ''
+                    availablity = ''
+                    change = ind['changed']['changes']
+                    if change == 'availablity':
+                        availablity = ind['changed']['changes'][1]
+                    if change == 'name':
+                        name = ind['changed']['changes'][1]
+                    if change == 'size':
+                        size = ind['changed']['changes'][1]
+                    if change == 'price':
+                        price = ind['changed']['changes'][1]
                 new_tr = ''
-                new_tr =  "<tr class='"+str(action)+" actions'>"+"<td>"+str(id)+"</td>" + "<td>"+str(name)+"</td>" + "<td>"+str(price)+"</td>"+ "<td>"+str(size)+"</td>"+ "<td>"+str(action).capitalize()+"</td>" +  "</tr>"
+                new_tr =  "<tr class='"+str(action)+" actions'>"+"<td>"+str(id)+"</td>" + "<td>"+str(name)+"</td>" + "<td>"+str(price)+"</td>"+ "<td>"+str(size)+"</td>"+ "<td>"+str(availablity).capitalize()+"</td>" +   "<td>"+str(action).capitalize()+"</td>" +  "</tr>"
                 tr_string = tr_string + new_tr
-                try:
-                    write_compair([id,name,size,price,str(action).capitalize()])
-                except Exception as e:
-                    print('DIFF NOT WRITEN TO CSV')
-                    print(e)
-
             except Exception as e:
                 print(e)
-
+    print(tr_string)
     return tr_string
 
-def write_compair(row):
-    with open(COMPAIR_FILE_NAME, 'a+', newline='') as csvfile:
-        spamwriter = csv.writer(csvfile, delimiter=' ',quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        spamwriter.writerow(row)
