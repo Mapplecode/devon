@@ -116,7 +116,7 @@ def write_csv(rows,filename):
 
 def start_scrap():
     options = Options()
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
     options.add_argument('--disable-gpu')
     if platform == "win32":
         # Windows...
