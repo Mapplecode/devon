@@ -118,16 +118,17 @@ def start_scrap():
     options = Options()
     # options.add_argument('--headless')
     options.add_argument('--disable-gpu')
-    if platform == "linux" or platform == "linux2":
+    if platform == "win32":
+        # Windows...
+        s = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=s, options=options)
+        driver.maximize_window()
+    else:
         # linux
         import os
         path = os.getcwd()
         driver = webdriver.Chrome(executable_path=os.path.join(path,'chromedriver'),options=options)
-    elif platform == "win32":
-        # Windows...
-        s = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=s, options=options)  
-        driver.maximize_window()
+
     try:
         ## call function        
         url = 'https://www.backontrack-uk.co.uk/'
