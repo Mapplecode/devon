@@ -127,6 +127,7 @@ def start_scrap():
         # linux
         import os
         path = os.getcwd()
+        print(os.path.join(path,'chromedriver'))
         driver = webdriver.Chrome(executable_path=os.path.join(path,'chromedriver'),options=options)
 
     try:
