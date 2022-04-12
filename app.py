@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template,request,jsonify,json
+from flask import render_template,request,jsonify,json,send_file
 from categories import start_scrap
 import pandas as pd
 import os
@@ -60,7 +60,14 @@ def remaining_products():
     else:
         return {'data':''}
 
+from flask import send_file
 
+@app.route('/download_file') # this is a job for GET, not POST
+def plot_csv():
+    return send_file('compair.csv',
+                     mimetype='text/csv',
+                     attachment_filename='compair.csv',
+                     as_attachment=True)
 # if __name__ == "__main__":
 #    app.run(debug=True, use_debugger=False, use_reloader=False)
 

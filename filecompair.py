@@ -13,36 +13,52 @@ def file_compair(file_1,file_2):
     CSV_1 = load_csv(open(file_1), key="id")
     CSV_2 = load_csv(open(file_2), key="id")
     diff = compare(CSV_1,CSV_2)
+    detailList = list()
+    detailList.append(['id', 'name', 'price', 'size', 'availablity','action'])
     tr_string = ''
     for action in diff.keys():
         inner_data = diff[action]
         for ind in inner_data:
             try:
-                if inner_data != 'changed':
+                if 'key' not in ind.keys():
+                    print(inner_data,'no-key')
                     id = str(ind['id'])
                     name = str(ind['name'])
                     size = str(ind['size'])
                     price = str(ind['price'])
                     availablity = str(ind['availablity'])
                 else:
+                    print(inner_data)
                     id = str(ind['key'])
-                    name = ''
-                    size =  ''
-                    availablity = ''
-                    change = ind['changed']['changes']
-                    if change == 'availablity':
-                        availablity = ind['changed']['changes'][1]
-                    if change == 'name':
-                        name = ind['changed']['changes'][1]
-                    if change == 'size':
-                        size = ind['changed']['changes'][1]
-                    if change == 'price':
-                        price = ind['changed']['changes'][1]
+                    name = ' -- '
+                    size =  '  --  '
+                    availablity = '  --  '
+                    price = '  --  '
+                    change = ind['changes']
+                    if 'availablity' in change.keys():
+                        availablity = change['availablity'][1]
+                    if 'name' in change.keys():
+                        name = ind['changes']['name'][1]
+                    if 'size' in change.keys():
+                        size = ind['changes']['size'][1]
+                    if 'price' in change.keys():
+                        price = ind['changes']['price'][1]
+                detailList.append([id,name, price, size, availablity,str(action).capitalize()])
                 new_tr = ''
                 new_tr =  "<tr class='"+str(action)+" actions'>"+"<td>"+str(id)+"</td>" + "<td>"+str(name)+"</td>" + "<td>"+str(price)+"</td>"+ "<td>"+str(size)+"</td>"+ "<td>"+str(availablity).capitalize()+"</td>" +   "<td>"+str(action).capitalize()+"</td>" +  "</tr>"
                 tr_string = tr_string + new_tr
             except Exception as e:
                 print(e)
+    filename = 'compair.csv'
+    write_csv(detailList, filename=filename)
     print(tr_string)
     return tr_string
 
+def write_csv(rows,filename):
+    # fields = ['Product Name', 'Price', 'Size', 'Status']
+    rows = rows
+    with open(filename, 'w') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        # csvwriter.writerow(fields)
+        csvwriter.writerows(rows)
+    print("[INFO] File write successfull.")

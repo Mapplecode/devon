@@ -12,6 +12,7 @@
       $('#table_data').append(data['data']);
       $('#table_data').css('max-height','200px');
       $('#table_data').css('overflow','scroll');
+      $('#buttons_row').show();
       },
     });
   });
@@ -30,3 +31,25 @@ if(text == 'Removed'){
 $('.removed').css('display','table-row');
 }
 })
+
+function download_file(){
+
+  $.ajax({
+      type : 'GET',
+      url : "/download_file",
+      data : {},
+      success:function(data){
+      download(data, "compair.csv", "text/csv");
+      },
+    });
+}
+
+function download(content, filename, contentType)
+{
+    if(!contentType) contentType = 'application/octet-stream';
+        var a = document.createElement('a');
+        var blob = new Blob([content], {'type':contentType});
+        a.href = window.URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+}
