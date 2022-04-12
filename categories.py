@@ -127,8 +127,8 @@ def start_scrap():
         # linux
         import os
         path = os.getcwd()
-        driver = webdriver.Chrome(executable_path=os.path.join(path,'chromedriver'),options=options,service_log_path=path)
-
+        s = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=s, options=options)
     try:
         ## call function        
         url = 'https://www.backontrack-uk.co.uk/'
