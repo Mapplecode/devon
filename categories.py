@@ -116,7 +116,7 @@ def write_csv(rows,filename):
 
 def start_scrap():
     options = Options()
-    options.add_argument('--headless')
+    # options.add_argument('--headless')
     options.add_argument('--disable-gpu')
     if platform == "win32":
         # Windows...
@@ -126,8 +126,8 @@ def start_scrap():
     else:
         # linux
         import os
-        s = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=s, options=options)
+        path = os.getcwd()
+        driver = webdriver.Chrome(executable_path=os.path.join(path,'chromedriver'),options=options)
 
     try:
         ## call function        
