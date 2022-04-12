@@ -120,7 +120,9 @@ def start_scrap():
     options.add_argument('--disable-gpu')
     if platform == "linux" or platform == "linux2":
         # linux
-        driver = webdriver.Chrome(executable_path='/home/mapple/PycharmProjects/devon/chromedriver',options=options)
+        import os
+        path = os.getcwd()
+        driver = webdriver.Chrome(executable_path=os.path.join(path,'chromedriver'),options=options)
     elif platform == "win32":
         # Windows...
         s = Service(ChromeDriverManager().install())
