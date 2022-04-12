@@ -121,7 +121,7 @@ def start_scrap():
 
     import os
     path = os.getcwd()
-    driver = webdriver.Chrome(executable_path=os.path.join(path,'chromedriver'),options=options)
+    driver = webdriver.Chrome(executable_path=os.path.join(path,'chromedriver'),chrome_options=options)
 
     try:
         ## call function        
