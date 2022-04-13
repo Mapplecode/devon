@@ -113,9 +113,11 @@ def write_csv(rows,filename):
 
 def start_scrap():
     options = Options()
-    options.add_argument('--headless')
+    options.add_argument("disable-infobars")
     options.add_argument('--disable-gpu')
-    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    options.add_argument('--headless')
     import os
     path = os.getcwd()
     from selenium.webdriver.chrome.service import Service
