@@ -7,8 +7,6 @@ import csv
 from selenium.webdriver.support.ui import Select
 from datetime import datetime
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 count_file = 'count_file.txt'
 
 def product_details(driver,url):
@@ -120,8 +118,10 @@ def start_scrap():
     options.add_argument('--disable-dev-shm-usage')
     import os
     path = os.getcwd()
+    from selenium.webdriver.chrome.service import Service
+    Chrome_service = Service(str(path)+'/chromedriver100_0')
     try:
-        driver = webdriver.Chrome(executable_path=str(path)+'/chromedriver100_0',options=options)
+        driver = webdriver.Chrome(service=Chrome_service,options=options)
     except Exception as e:
         print(e)
         return e
