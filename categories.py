@@ -1,15 +1,14 @@
 from selenium import webdriver
+
+from webdriver_manager.utils import ChromeType
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 import time
-import csv 
-from sys import platform
+import csv
 from selenium.webdriver.support.ui import Select
 from datetime import datetime
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-
 count_file = 'count_file.txt'
 
 def product_details(driver,url):
@@ -118,16 +117,15 @@ def start_scrap():
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
-    if platform == "win32":
-        # Windows...
-        s = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=s, options=options)
-        driver.maximize_window()
-    else:
-        # linux
-        import os
-        path = os.getcwd()
-        driver = webdriver.Chrome(executable_path=os.path.join('chromedriver'),options=options,service_log_path=path)
+
+    import os
+    path = os.getcwd()
+    s = Service(ChromeDriverManager().install())
+    print(s.path)
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+
+    )
 
     try:
         ## call function        
