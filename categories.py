@@ -122,11 +122,13 @@ def start_scrap():
     path = os.getcwd()
     s = Service(ChromeDriverManager().install())
     print(s.path)
-    driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+    try:
+        driver = webdriver.Chrome(
+            service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
 
-    )
-
+        )
+    except Exception as e:
+        print(e)
     try:
         ## call function        
         url = 'https://www.backontrack-uk.co.uk/'
