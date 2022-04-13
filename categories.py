@@ -120,12 +120,8 @@ def start_scrap():
     options.add_argument('--disable-dev-shm-usage')
     import os
     path = os.getcwd()
-    s = Service(ChromeDriverManager().install())
-    print(s.path)
     try:
-        driver = webdriver.Chrome(
-            service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-        )
+        driver = webdriver.Chrome(executable_path=str(path)+'/chromedriver100_0',options=options)
     except Exception as e:
         print(e)
         return e
