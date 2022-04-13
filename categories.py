@@ -117,7 +117,7 @@ def start_scrap():
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
-
+    options.add_argument('--disable-dev-shm-usage')
     import os
     path = os.getcwd()
     s = Service(ChromeDriverManager().install())
@@ -125,10 +125,10 @@ def start_scrap():
     try:
         driver = webdriver.Chrome(
             service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-
         )
     except Exception as e:
         print(e)
+        return e
     try:
         ## call function        
         url = 'https://www.backontrack-uk.co.uk/'
