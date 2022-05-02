@@ -3,6 +3,8 @@ import os
 import pprint
 import csv
 COMPAIR_FILE_NAME = os.path.join(os.getcwd(),'difference_checker.csv')
+from datetime import datetime
+
 
 def file_compair(file_1,file_2):
     try:
@@ -62,3 +64,32 @@ def write_csv(rows,filename):
         # csvwriter.writerow(fields)
         csvwriter.writerows(rows)
     print("[INFO] File write successfull.")
+
+def get_scrap_data_files():
+    scraps_path = os.path.join(os.getcwd(), 'scraps')
+    if not os.path.exists(scraps_path):
+        os.mkdir(scraps_path)
+    scrap_folder_files = os.listdir('scraps')
+    print(scrap_folder_files)
+    new_tr = ''
+    for file in scrap_folder_files:
+        full_file_path = os.path.join(scraps_path,file)
+        print(os.path.exists(full_file_path))
+        time_is = os.path.getmtime(full_file_path)
+        mod_time = datetime.fromtimestamp(time_is)
+        print(mod_time)
+
+        new_tr += "<tr class='""'>" + \
+                 "<td>" + str(file) + "</td>" +\
+                 "<td>" + str(mod_time) + "</td>" + \
+                 "<td > <button type='button' " \
+                 " class='btn btn-danger action_btn'>Delete</button> </td>" +  \
+                 "</tr>"
+    return new_tr
+
+def delete_scrap_file_path(file_name):
+    scraps_path = os.path.join(os.getcwd(), 'scraps')
+    if not os.path.exists(scraps_path):
+        os.mkdir(scraps_path)
+    os.remove(os.path.join(scraps_path,file_name))
+    return 'Delete Sucessfull'

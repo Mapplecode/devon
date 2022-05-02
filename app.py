@@ -3,8 +3,12 @@ from flask import render_template,request,jsonify,json,send_file
 from categories import start_scrap
 import pandas as pd
 import os
-from filecompair import file_compair
+from filecompair import file_compair,get_scrap_data_files,delete_scrap_file_path
 import os
+from flask import send_file
+
+
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -14,10 +18,38 @@ def home():
 
 @app.route("/compair")
 def compair():
+    scraps_path = os.path.join(os.getcwd(),'scraps')
+    if not os.path.exists(scraps_path):
+        os.mkdir(scraps_path)
     scrap_folder_files = os.listdir('scraps')
     print(scrap_folder_files)
     return render_template('compair.html',scrap_folder_files=scrap_folder_files)
 
+
+
+@app.route("/get_scrap_files",methods=['POST','GET'])
+def get_scrap_files():
+    data = ''
+    data = get_scrap_data_files()
+    return jsonify({'data':data})
+
+
+@app.route("/delete_scrap_files",methods=['POST','GET'])
+def delete_scrap_file():
+    param = {}
+    if request.method == 'GET':
+        param = request.args
+    elif request.method == 'POST':
+        param = request.form
+    file_name = param.get('file_name')
+    data = ''
+    data = delete_scrap_file_path(file_name)
+    return jsonify({'data':data})
+
+@app.route("/download_scrap")
+def download_scrap():
+
+    return render_template('download_scrap.html')
 
 @app.route('/compair_files',methods=['POST','GET'])
 def compair_files():
@@ -60,7 +92,6 @@ def remaining_products():
     else:
         return {'data':''}
 
-from flask import send_file
 
 @app.route('/download_file') # this is a job for GET, not POST
 def plot_csv():

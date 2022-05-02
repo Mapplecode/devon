@@ -1709,3 +1709,5 @@ BLOG SINGLE
   font-weight: bold;
 }
 /*# sourceMappingURL=maps/style.css.map */
+button.btn.btn-danger.action_btn {
+    padding: 7%;
