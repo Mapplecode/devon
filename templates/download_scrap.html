@@ -27,7 +27,15 @@
                         </tr>
                       </thead>
                     <tbody id="table_data_downloads">
-
+                    {% for data in data_list %}
+                    <tr class=''>
+                        <td>{{data['name']}}</td>
+                        <td>{{data['time']}}</td>
+                        <td>
+                            <button type='button' value="{{data['full_path']}}" class='btn btn-success action_btn'>Download</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -97,6 +105,6 @@
         </div>
     </div>
 </section>
-<script src="/static/js/download_scrap.js"></script>
+
 
 {% endblock %}

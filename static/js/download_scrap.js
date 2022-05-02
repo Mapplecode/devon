@@ -1,23 +1,17 @@
 
 $(document).ready(function(){
 
+$('.action_btn').click(function(){
 
 $.ajax({
       type : 'POST',
-      url : "/get_scrap_files",
-      data : {},
+      url : "/download_scrap",
+      data : {'file':$(this).val()},
       success:function(data){
-      $('#table_data_downloads').append(data['data']);
-      $('#table_data').css('max-height','200px');
-      $('#table_data').css('overflow','scroll');
-      $('#buttons_row').show();
+
       },
     });
 
-
-$(".action_btn").on('click',function () {
-alert('hi')
-})
 
 
 

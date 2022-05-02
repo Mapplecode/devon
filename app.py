@@ -5,8 +5,7 @@ import pandas as pd
 import os
 from filecompair import file_compair,get_scrap_data_files,delete_scrap_file_path
 import os
-from flask import send_file
-
+from flask import send_file,make_response
 
 
 app = Flask(__name__)
@@ -31,7 +30,8 @@ def compair():
 def get_scrap_files():
     data = ''
     data = get_scrap_data_files()
-    return jsonify({'data':data})
+    print(data)
+    return jsonify({'data_list':data})
 
 
 @app.route("/delete_scrap_files",methods=['POST','GET'])
@@ -48,8 +48,9 @@ def delete_scrap_file():
 
 @app.route("/download_scrap")
 def download_scrap():
-
-    return render_template('download_scrap.html')
+    data = get_scrap_data_files()
+    print(data)
+    return render_template('download_scrap.html',data_list = data)
 
 @app.route('/compair_files',methods=['POST','GET'])
 def compair_files():
@@ -99,6 +100,25 @@ def plot_csv():
                      mimetype='text/csv',
                      attachment_filename='compair.csv',
                      as_attachment=True)
+@app.route('/download_scrap') # this is a job for GET, not POST
+def plot_csv2():
+    param = {}
+    data = {}
+    try:
+        if request.method == 'GET':
+            param = request.args
+        elif request.method == 'POST':
+            param = request.form
+    except:
+        pass
+    file = param.get('file')
+    fcsv = 'foo,bar,baz\nhai,bai,crai\n'
+    response = make_response(file)
+    cd = 'attachment; filename=scrap.csv'
+    response.headers['Content-Disposition'] = cd
+    response.mimetype='text/csv'
+
+    return response
 # if __name__ == "__main__":
 #    app.run(debug=True, use_debugger=False, use_reloader=False)
 

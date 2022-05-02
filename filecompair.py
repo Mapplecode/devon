@@ -72,6 +72,8 @@ def get_scrap_data_files():
     scrap_folder_files = os.listdir('scraps')
     print(scrap_folder_files)
     new_tr = ''
+    data_list = list()
+
     for file in scrap_folder_files:
         full_file_path = os.path.join(scraps_path,file)
         print(os.path.exists(full_file_path))
@@ -83,9 +85,10 @@ def get_scrap_data_files():
                  "<td>" + str(file) + "</td>" +\
                  "<td>" + str(mod_time) + "</td>" + \
                  "<td > <button type='button' " \
-                 " class='btn btn-danger action_btn'>Delete</button> </td>" +  \
+                 " class='btn btn-success action_btn'>Download</button> </td>" +  \
                  "</tr>"
-    return new_tr
+        data_list.append({'name':file,'time':mod_time,'full_path':full_file_path})
+    return data_list
 
 def delete_scrap_file_path(file_name):
     scraps_path = os.path.join(os.getcwd(), 'scraps')
