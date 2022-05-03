@@ -8,26 +8,20 @@ $.ajax({
       url : "/download_scrap",
       data : {'file':$(this).val()},
       success:function(data){
-
+        console.log(data)
+        var temp = data.toString().toLowerCase();
+        download(temp, $(this).val(), "text/csv");
       },
     });
 
-
-
-
 })
-
-
-//function delete_file(file_name){
-//
-//$.ajax({
-//      type : 'GET',
-//      url : "/delete_scrap_files",
-//      data : {'file_name':file_name},
-//      success:function(data){
-//     location.reload();
-//      },
-//    });
-//
-//
-//}
+function download(content, filename, contentType)
+{
+    if(!contentType) contentType = 'application/octet-stream';
+        var a = document.createElement('a');
+        var blob = new Blob([content], {'type':contentType});
+        a.href = window.URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+}
+})

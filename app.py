@@ -3,9 +3,10 @@ from flask import render_template,request,jsonify,json,send_file
 from categories import start_scrap
 import pandas as pd
 import os
+import csv
 from filecompair import file_compair,get_scrap_data_files,delete_scrap_file_path
 import os
-from flask import send_file,make_response
+from flask import send_file,make_response,Response,send_file
 
 
 app = Flask(__name__)
@@ -100,7 +101,7 @@ def plot_csv():
                      mimetype='text/csv',
                      attachment_filename='compair.csv',
                      as_attachment=True)
-@app.route('/download_scrap') # this is a job for GET, not POST
+@app.route('/download_scrap',methods=['POST','GET'])
 def plot_csv2():
     param = {}
     data = {}
@@ -112,13 +113,10 @@ def plot_csv2():
     except:
         pass
     file = param.get('file')
-    fcsv = 'foo,bar,baz\nhai,bai,crai\n'
-    response = make_response(file)
-    cd = 'attachment; filename=scrap.csv'
-    response.headers['Content-Disposition'] = cd
-    response.mimetype='text/csv'
-
-    return response
+    return send_file(file,
+                     mimetype='application/vnd.ms-excel',
+                     attachment_filename=file,
+                     as_attachment=True)
 # if __name__ == "__main__":
 #    app.run(debug=True, use_debugger=False, use_reloader=False)
 

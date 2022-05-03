@@ -84,9 +84,9 @@ def get_scrap_data_files():
         new_tr += "<tr class='""'>" + \
                  "<td>" + str(file) + "</td>" +\
                  "<td>" + str(mod_time) + "</td>" + \
-                 "<td > <button type='button' " \
-                 " class='btn btn-success action_btn'>Download</button> </td>" +  \
-                 "</tr>"
+                 "<td ><a href='/download_scrap?file={}'> <button type='button' " \
+                 " class='btn btn-success action_btn'>Download</button></a> </td>" +  \
+                 "</tr>".format(full_file_path)
         data_list.append({'name':file,'time':mod_time,'full_path':full_file_path})
     return data_list
 
