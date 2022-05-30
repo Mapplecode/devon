@@ -95,15 +95,21 @@ def remaining_products():
         return {'data':''}
 
 
+
 @app.route('/download_file') # this is a job for GET, not POST
 def plot_csv():
-    return send_file('compair.csv',
-                     mimetype='text/csv',
-                     attachment_filename='compair.csv',
-                     as_attachment=True)
-@app.route('/download_scrap',methods=['POST','GET'])
+    path ="product_details_full.csv"
+    # path = os.path.dirname(os.path.abspath(__file__))
+    return send_file(path,
+            mimetype='text/csv',
+            as_attachment=True)
+
+
+
+@app.route('/download_scraps',methods=['POST','GET'])
 def plot_csv2():
-    param = {}
+    path ="product_details_full.csv"
+
     data = {}
     try:
         if request.method == 'GET':
@@ -113,10 +119,14 @@ def plot_csv2():
     except:
         pass
     file = param.get('file')
-    return send_file(file,
+    print(file,"========")
+
+    return send_file(path,
                      mimetype='application/vnd.ms-excel',
-                     attachment_filename=file,
+                     attachment_filename=path,
                      as_attachment=True)
-# if __name__ == "__main__":
-#    app.run(debug=True, use_debugger=False, use_reloader=False)
+
+
+if __name__ == "__main__":
+   app.run(port=5000,debug=True, use_debugger=False, use_reloader=False)
 
