@@ -101,11 +101,12 @@ def plot_csv():
                      mimetype='text/csv',
                      attachment_filename='compair.csv',
                      as_attachment=True)
-@app.route('/download_scrap',methods=['POST','GET'])
+@app.route('/scrap_download',methods=['POST','GET'])
 def plot_csv2():
     param = {}
     data = {}
     try:
+
         if request.method == 'GET':
             param = request.args
         elif request.method == 'POST':
@@ -113,10 +114,8 @@ def plot_csv2():
     except:
         pass
     file = param.get('file')
-    return send_file(file,
-                     mimetype='application/vnd.ms-excel',
-                     attachment_filename=file,
-                     as_attachment=True)
+    print(file)
+    return send_file(file)
 # if __name__ == "__main__":
 #    app.run(debug=True, use_debugger=False, use_reloader=False)
 

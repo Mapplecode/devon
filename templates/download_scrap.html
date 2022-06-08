@@ -32,7 +32,8 @@
                         <td>{{data['name']}}</td>
                         <td>{{data['time']}}</td>
                         <td>
-                            <button type='button' value="{{data['full_path']}}" class='btn btn-success action_btn'>Download</button>
+                           <a href="/scrap_download?file=scraps/{{data['name']}}"> <button type='button'  value="{{data['full_path']}}" class='btn btn-success action_btn'>Download</button>
+                           </a>
                         </td>
                     </tr>
                     {% endfor %}

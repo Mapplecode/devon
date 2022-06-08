@@ -8,9 +8,7 @@ $.ajax({
       url : "/download_scrap",
       data : {'file':$(this).val()},
       success:function(data){
-        console.log(data)
-        var temp = data.toString().toLowerCase();
-        download(temp, $(this).val(), "text/csv");
+        download(data, $(this).val(), "text/csv");
       },
     });
 
@@ -25,3 +23,10 @@ function download(content, filename, contentType)
         a.click();
 }
 })
+
+function download_file_scrap(path){
+
+window.location.href = path;
+
+
+}
